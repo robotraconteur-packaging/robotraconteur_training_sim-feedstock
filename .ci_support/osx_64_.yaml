@@ -1,0 +1,12 @@
+MACOSX_DEPLOYMENT_TARGET:
+- '10.14'
+channel_sources:
+- robotraconteur,conda-forge,defaults
+channel_targets:
+- robotraconteur main
+macos_machine:
+- x86_64-apple-darwin13.4.0
+macos_min_version:
+- '10.14'
+target_platform:
+- osx-64
