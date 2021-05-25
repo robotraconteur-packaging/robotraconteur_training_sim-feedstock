@@ -13,17 +13,56 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - CONFIG: linux_64_
-            SHORT_CONFIG: linux_64_
+          - CONFIG: linux_64_python3.6.____cpython
+            SHORT_CONFIG: linux_64_python3.6.____cpython
             UPLOAD_PACKAGES: False
-            DOCKER_IMAGE: quay.io/condaforge/linux-anvil-comp7
+            DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-cuda:10.2
             os: ubuntu
-          - CONFIG: win_64_
-            SHORT_CONFIG: win_64_
+          - CONFIG: linux_64_python3.7.____cpython
+            SHORT_CONFIG: linux_64_python3.7.____cpython
+            UPLOAD_PACKAGES: False
+            DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-cuda:10.2
+            os: ubuntu
+          - CONFIG: linux_64_python3.8.____cpython
+            SHORT_CONFIG: linux_64_python3.8.____cpython
+            UPLOAD_PACKAGES: False
+            DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-cuda:10.2
+            os: ubuntu
+          - CONFIG: linux_64_python3.9.____cpython
+            SHORT_CONFIG: linux_64_python3.9.____cpython
+            UPLOAD_PACKAGES: False
+            DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-cuda:10.2
+            os: ubuntu
+          - CONFIG: win_64_python3.6.____cpython
+            SHORT_CONFIG: win_64_python3.6.____cpython
             UPLOAD_PACKAGES: False
             os: windows
-          - CONFIG: osx_64_
-            SHORT_CONFIG: osx_64_
+          - CONFIG: win_64_python3.7.____cpython
+            SHORT_CONFIG: win_64_python3.7.____cpython
+            UPLOAD_PACKAGES: False
+            os: windows
+          - CONFIG: win_64_python3.8.____cpython
+            SHORT_CONFIG: win_64_python3.8.____cpython
+            UPLOAD_PACKAGES: False
+            os: windows
+          - CONFIG: win_64_python3.9.____cpython
+            SHORT_CONFIG: win_64_python3.9.____cpython
+            UPLOAD_PACKAGES: False
+            os: windows
+          - CONFIG: osx_64_python3.6.____cpython
+            SHORT_CONFIG: osx_64_python3.6.____cpython
+            UPLOAD_PACKAGES: False
+            os: macos
+          - CONFIG: osx_64_python3.7.____cpython
+            SHORT_CONFIG: osx_64_python3.7.____cpython
+            UPLOAD_PACKAGES: False
+            os: macos
+          - CONFIG: osx_64_python3.8.____cpython
+            SHORT_CONFIG: osx_64_python3.8.____cpython
+            UPLOAD_PACKAGES: False
+            os: macos
+          - CONFIG: osx_64_python3.9.____cpython
+            SHORT_CONFIG: osx_64_python3.9.____cpython
             UPLOAD_PACKAGES: False
             os: macos
     steps:
