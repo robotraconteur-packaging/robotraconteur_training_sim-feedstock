@@ -15,3 +15,6 @@ provider:
 github_actions:
   upload_packages: False
   store_build_artifacts: True
+
+os_version:
+  linux_64: cos7
