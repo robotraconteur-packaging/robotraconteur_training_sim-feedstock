@@ -33,16 +33,41 @@ conda config --add channels r
 conda config --set channel_priority strict
 ```
 
-Once the `r` channel has been enabled, `robotraconteur_training_sim` can be installed with:
+Once the `r` channel has been enabled, `robotraconteur_training_sim` can be installed with `conda`:
 
 ```
 conda install robotraconteur_training_sim
 ```
 
-It is possible to list all of the versions of `robotraconteur_training_sim` available on your platform with:
+or with `mamba`:
+
+```
+mamba install robotraconteur_training_sim
+```
+
+It is possible to list all of the versions of `robotraconteur_training_sim` available on your platform with `conda`:
 
 ```
 conda search robotraconteur_training_sim --channel r
+```
+
+or with `mamba`:
+
+```
+mamba search robotraconteur_training_sim --channel r
+```
+
+Alternatively, `mamba repoquery` may provide more information:
+
+```
+# Search all versions available on your platform:
+mamba repoquery search robotraconteur_training_sim --channel r
+
+# List packages depending on `robotraconteur_training_sim`:
+mamba repoquery whoneeds robotraconteur_training_sim --channel r
+
+# List dependencies of `robotraconteur_training_sim`:
+mamba repoquery depends robotraconteur_training_sim --channel r
 ```
 
 
