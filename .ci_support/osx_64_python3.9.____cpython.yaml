@@ -1,7 +1,7 @@
 MACOSX_DEPLOYMENT_TARGET:
 - '10.14'
 channel_sources:
-- robotraconteur,conda-forge,defaults
+- robotraconteur,wasontech,conda-forge,defaults
 channel_targets:
 - robotraconteur main
 macos_machine:
