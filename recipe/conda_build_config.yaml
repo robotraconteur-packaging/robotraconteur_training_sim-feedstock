@@ -1,5 +1,5 @@
 channel_sources:
-  - robotraconteur,conda-forge,defaults
+  - robotraconteur,wasontech,conda-forge,defaults
 channel_targets:
   - robotraconteur main
 macos_min_version:             # [osx]
