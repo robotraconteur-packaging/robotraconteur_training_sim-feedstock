@@ -25,7 +25,7 @@ requirements:
     - gazebo_robotraconteur_server_plugin
     - gazebo-robotraconteur-sim-drivers
     - pyyaml
-    - py-opencv
+    - py-opencv=4.7.0
     - qpsolvers
     - robotraconteur_companion_python
     - python
