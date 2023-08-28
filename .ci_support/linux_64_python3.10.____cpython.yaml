@@ -1,7 +1,7 @@
 cdt_name:
 - cos7
 channel_sources:
-- robotraconteur,wasontech,conda-forge,defaults
+- robotraconteur,wasontech,conda-forge
 channel_targets:
 - robotraconteur main
 docker_image:

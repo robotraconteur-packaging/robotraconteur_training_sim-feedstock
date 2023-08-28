@@ -1,5 +1,5 @@
 channel_sources:
-- robotraconteur,wasontech,conda-forge,defaults
+- robotraconteur,wasontech,conda-forge
 channel_targets:
 - robotraconteur main
 pin_run_as_build:
