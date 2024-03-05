@@ -4,7 +4,7 @@ package:
 
 source:
   git_url: https://github.com/johnwason/robotraconteur_training_sim.git
-  git_rev: ffda23f666f0836550c9693e2c36dd48bf4e727e
+  git_rev: 10341a394d2f46838d28f156c85ac8931ace972b
 
 requirements:
   host:
