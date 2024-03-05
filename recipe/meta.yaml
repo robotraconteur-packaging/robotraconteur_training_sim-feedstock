@@ -1,10 +1,10 @@
 package:
   name: robotraconteur_training_sim
-  version: 0.3.0
+  version: 0.4.0
 
 source:
-  git_url: https://github.com/robotraconteur-contrib/robotraconteur_training_sim.git
-  git_rev: d8ae6291670086d1d1563a2679a8639454e163ae
+  git_url: https://github.com/johnwason/robotraconteur_training_sim.git
+  git_rev: ffda23f666f0836550c9693e2c36dd48bf4e727e
 
 requirements:
   host:
@@ -31,9 +31,10 @@ requirements:
     - python
     - drekar-launch
     - drekar-launch-process
+    - menuinst # [win]
 
 build:
-  number: 2
+  number: 0
 
 about:
   home: http://robotraconteur.com
