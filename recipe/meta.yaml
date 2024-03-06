@@ -1,10 +1,10 @@
 package:
   name: robotraconteur_training_sim
-  version: 0.1.10
+  version: 0.4.0
 
 source:
   git_url: https://github.com/robotraconteur-contrib/robotraconteur_training_sim.git
-  git_rev: v0.1.10
+  git_rev: v0.4.0
 
 requirements:
   host:
@@ -12,7 +12,7 @@ requirements:
     - robotraconteur_companion
     - gazebo
     - gazebo_robotraconteur_server_plugin
-    - gazebo_model_robotraconteur_driver
+    - gazebo-robotraconteur-sim-drivers
     - pyyaml
     - py-opencv
     - robotraconteur_companion_python
@@ -23,15 +23,18 @@ requirements:
     - robotraconteur_companion
     - gazebo
     - gazebo_robotraconteur_server_plugin
-    - gazebo_model_robotraconteur_driver
+    - gazebo-robotraconteur-sim-drivers
     - pyyaml
     - py-opencv
     - qpsolvers
     - robotraconteur_companion_python
     - python
+    - drekar-launch
+    - drekar-launch-process
+    - menuinst # [win]
 
 build:
-  number: 2
+  number: 0
 
 about:
   home: http://robotraconteur.com
