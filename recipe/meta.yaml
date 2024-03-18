@@ -34,7 +34,7 @@ requirements:
     - menuinst # [win]
 
 build:
-  number: 0
+  number: 1
 
 about:
   home: http://robotraconteur.com

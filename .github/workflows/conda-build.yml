@@ -45,26 +45,6 @@ jobs:
             os: ubuntu
             runs_on: ['ubuntu-latest']
             DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-          - CONFIG: win_64_python3.10.____cpython
-            SHORT_CONFIG: win_64_python3.10.____cpython
-            UPLOAD_PACKAGES: True
-            os: windows
-            runs_on: ['windows-latest']
-          - CONFIG: win_64_python3.11.____cpython
-            SHORT_CONFIG: win_64_python3.11.____cpython
-            UPLOAD_PACKAGES: True
-            os: windows
-            runs_on: ['windows-latest']
-          - CONFIG: win_64_python3.8.____cpython
-            SHORT_CONFIG: win_64_python3.8.____cpython
-            UPLOAD_PACKAGES: True
-            os: windows
-            runs_on: ['windows-latest']
-          - CONFIG: win_64_python3.9.____cpython
-            SHORT_CONFIG: win_64_python3.9.____cpython
-            UPLOAD_PACKAGES: True
-            os: windows
-            runs_on: ['windows-latest']
           - CONFIG: osx_64_python3.10.____cpython
             SHORT_CONFIG: osx_64_python3.10.____cpython
             UPLOAD_PACKAGES: True
@@ -85,6 +65,26 @@ jobs:
             UPLOAD_PACKAGES: True
             os: macos
             runs_on: ['macos-latest']
+          - CONFIG: win_64_python3.10.____cpython
+            SHORT_CONFIG: win_64_python3.10.____cpython
+            UPLOAD_PACKAGES: True
+            os: windows
+            runs_on: ['windows-latest']
+          - CONFIG: win_64_python3.11.____cpython
+            SHORT_CONFIG: win_64_python3.11.____cpython
+            UPLOAD_PACKAGES: True
+            os: windows
+            runs_on: ['windows-latest']
+          - CONFIG: win_64_python3.8.____cpython
+            SHORT_CONFIG: win_64_python3.8.____cpython
+            UPLOAD_PACKAGES: True
+            os: windows
+            runs_on: ['windows-latest']
+          - CONFIG: win_64_python3.9.____cpython
+            SHORT_CONFIG: win_64_python3.9.____cpython
+            UPLOAD_PACKAGES: True
+            os: windows
+            runs_on: ['windows-latest']
     steps:
 
     - name: Checkout code
