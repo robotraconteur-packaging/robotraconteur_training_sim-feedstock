@@ -13,7 +13,12 @@ Current build status
 ====================
 
 
-<table>
+<table><tr>
+    <td>All platforms:</td>
+    <td>
+      <img src="https://img.shields.io/badge/noarch-disabled-lightgrey.svg" alt="noarch disabled">
+    </td>
+  </tr>
 </table>
 
 Current release info
@@ -21,7 +26,7 @@ Current release info
 
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-robotraconteur_training_sim-green.svg)](https://anaconda.org/robotraconteur/robotraconteur_training_sim) | [![Conda Downloads](https://img.shields.io/conda/dn/robotraconteur/robotraconteur_training_sim.svg)](https://anaconda.org/robotraconteur/robotraconteur_training_sim) | [![Conda Version](https://img.shields.io/conda/vn/robotraconteur/robotraconteur_training_sim.svg)](https://anaconda.org/robotraconteur/robotraconteur_training_sim) | [![Conda Platforms](https://img.shields.io/conda/pn/robotraconteur/robotraconteur_training_sim.svg)](https://anaconda.org/robotraconteur/robotraconteur_training_sim) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-robotraconteur__training__sim-green.svg)](https://anaconda.org/robotraconteur/robotraconteur_training_sim) | [![Conda Downloads](https://img.shields.io/conda/dn/robotraconteur/robotraconteur_training_sim.svg)](https://anaconda.org/robotraconteur/robotraconteur_training_sim) | [![Conda Version](https://img.shields.io/conda/vn/robotraconteur/robotraconteur_training_sim.svg)](https://anaconda.org/robotraconteur/robotraconteur_training_sim) | [![Conda Platforms](https://img.shields.io/conda/pn/robotraconteur/robotraconteur_training_sim.svg)](https://anaconda.org/robotraconteur/robotraconteur_training_sim) |
 
 Installing robotraconteur_training_sim
 ======================================

@@ -21,76 +21,24 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - CONFIG: linux_64_python3.10.____cpython
-            SHORT_CONFIG: linux_64_python3.10.____cpython
+          - CONFIG: linux_64_
+            SHORT_CONFIG: linux_64_
             UPLOAD_PACKAGES: True
             os: ubuntu
             runs_on: ['ubuntu-latest']
-            DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-          - CONFIG: linux_64_python3.11.____cpython
-            SHORT_CONFIG: linux_64_python3.11.____cpython
-            UPLOAD_PACKAGES: True
-            os: ubuntu
-            runs_on: ['ubuntu-latest']
-            DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-          - CONFIG: linux_64_python3.8.____cpython
-            SHORT_CONFIG: linux_64_python3.8.____cpython
-            UPLOAD_PACKAGES: True
-            os: ubuntu
-            runs_on: ['ubuntu-latest']
-            DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-          - CONFIG: linux_64_python3.9.____cpython
-            SHORT_CONFIG: linux_64_python3.9.____cpython
-            UPLOAD_PACKAGES: True
-            os: ubuntu
-            runs_on: ['ubuntu-latest']
-            DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-          - CONFIG: osx_64_python3.10.____cpython
-            SHORT_CONFIG: osx_64_python3.10.____cpython
-            UPLOAD_PACKAGES: True
-            os: macos
-            runs_on: ['macos-latest']
-          - CONFIG: osx_64_python3.11.____cpython
-            SHORT_CONFIG: osx_64_python3.11.____cpython
-            UPLOAD_PACKAGES: True
-            os: macos
-            runs_on: ['macos-latest']
-          - CONFIG: osx_64_python3.8.____cpython
-            SHORT_CONFIG: osx_64_python3.8.____cpython
-            UPLOAD_PACKAGES: True
-            os: macos
-            runs_on: ['macos-latest']
-          - CONFIG: osx_64_python3.9.____cpython
-            SHORT_CONFIG: osx_64_python3.9.____cpython
-            UPLOAD_PACKAGES: True
-            os: macos
-            runs_on: ['macos-latest']
-          - CONFIG: win_64_python3.10.____cpython
-            SHORT_CONFIG: win_64_python3.10.____cpython
-            UPLOAD_PACKAGES: True
-            os: windows
-            runs_on: ['windows-latest']
-          - CONFIG: win_64_python3.11.____cpython
-            SHORT_CONFIG: win_64_python3.11.____cpython
-            UPLOAD_PACKAGES: True
-            os: windows
-            runs_on: ['windows-latest']
-          - CONFIG: win_64_python3.8.____cpython
-            SHORT_CONFIG: win_64_python3.8.____cpython
-            UPLOAD_PACKAGES: True
-            os: windows
-            runs_on: ['windows-latest']
-          - CONFIG: win_64_python3.9.____cpython
-            SHORT_CONFIG: win_64_python3.9.____cpython
+            DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
+          - CONFIG: win_64_
+            SHORT_CONFIG: win_64_
             UPLOAD_PACKAGES: True
             os: windows
             runs_on: ['windows-latest']
     steps:
 
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
 
     - name: Build on Linux
+      id: build-linux
       if: matrix.os == 'ubuntu'
       env:
         CONFIG: ${{ matrix.CONFIG }}
@@ -101,8 +49,10 @@ jobs:
         BINSTAR_TOKEN: ${{ secrets.BINSTAR_TOKEN }}
       shell: bash
       run: |
-        echo "::group::Configure binfmt_misc"
-        docker run --rm --privileged multiarch/qemu-user-static:register --reset --credential yes
+        if [[ "$(uname -m)" == "x86_64" ]]; then
+          echo "::group::Configure binfmt_misc"
+          docker run --rm --privileged multiarch/qemu-user-static:register --reset --credential yes
+        fi
         export flow_run_id="github_$GITHUB_RUN_ID"
         export remote_url="https://github.com/$GITHUB_REPOSITORY"
         export sha="$GITHUB_SHA"
@@ -117,6 +67,7 @@ jobs:
         ./.scripts/run_docker_build.sh
 
     - name: Build on macOS
+      id: build-macos
       if: matrix.os == 'macos'
       env:
         CONFIG: ${{ matrix.CONFIG }}
@@ -137,14 +88,9 @@ jobs:
         fi
         ./.scripts/run_osx_build.sh
 
-    - name: Install Miniconda for windows
-      uses: conda-incubator/setup-miniconda@v2
-      with:
-        miniforge-version: latest
-        miniforge-variant: Mambaforge
-      if: matrix.os == 'windows'
-
     - name: Build on windows
+      id: build-windows
+      if: matrix.os == 'windows'
       shell: cmd
       run: |
         set "flow_run_id=github_%GITHUB_RUN_ID%"
@@ -152,29 +98,59 @@ jobs:
         set "sha=%GITHUB_SHA%"
         call ".scripts\run_win_build.bat"
       env:
+        # default value; make it explicit, as it needs to match with artefact
+        # generation below. Not configurable for now, can be revisited later
+        CONDA_BLD_DIR: C:\bld
+        MINIFORGE_HOME: D:\Miniforge
         PYTHONUNBUFFERED: 1
         CONFIG: ${{ matrix.CONFIG }}
         CI: github_actions
         UPLOAD_PACKAGES: ${{ matrix.UPLOAD_PACKAGES }}
         BINSTAR_TOKEN: ${{ secrets.BINSTAR_TOKEN }}
-      if: matrix.os == 'windows'
-    - name: Prepare conda build artifacts
-      id: prepare-artifacts
-      shell: bash
+
+    - name: Determine build outcome
+      # this is to merge the status of the linux/osx/win builds into
+      # something we can easily reuse during artefact generation
+      id: determine-status
       if: ${{ always() }}
+      shell: bash
       env:
-        CONFIG: ${{ matrix.CONFIG }}
-        SHORT_CONFIG: ${{ matrix.SHORT_CONFIG }}
         OS: ${{ matrix.os }}
       run: |
-        export CI=github_actions
+        if [[ "$OS" == "ubuntu" ]]; then
+          STATUS=${{ steps.build-linux.outcome }}
+        elif [[ "$OS" == "macos" ]]; then
+          STATUS=${{ steps.build-macos.outcome }}
+        elif [[ "$OS" == "windows" ]]; then
+          STATUS=${{ steps.build-windows.outcome }}
+        fi
+        if [ -z "$STATUS" ]; then
+          # steps that never ran will have empty status
+          STATUS="cancelled"
+        fi
+        echo "status=$STATUS" >> $GITHUB_OUTPUT
+
+    - name: Prepare conda build artifacts
+      continue-on-error: true
+      id: prepare-artifacts
+      shell: bash
+      # we do not want to trigger artefact creation if the build was cancelled
+      if: ${{ always() && steps.determine-status.outputs.status != 'cancelled' }}
+      env:
+        CI: github_actions
+        CONFIG: ${{ matrix.CONFIG }}
+        SHORT_CONFIG: ${{ matrix.SHORT_CONFIG }}
+        JOB_STATUS: ${{ steps.determine-status.outputs.status }}
+        OS: ${{ matrix.os }}
+      run: |
         export CI_RUN_ID=$GITHUB_RUN_ID
         export FEEDSTOCK_NAME="$(basename $GITHUB_REPOSITORY)"
         export ARTIFACT_STAGING_DIR="$GITHUB_WORKSPACE"
         if [ $OS == "macos" ]; then
           export CONDA_BLD_DIR="${MINIFORGE_HOME:-${HOME}/miniforge3}/conda-bld"
         elif [ $OS == "windows" ]; then
-          export CONDA_BLD_DIR="${CONDA//\\//}/conda-bld"
+          # this needs to be consistent with build step, see above
+          export CONDA_BLD_DIR="C:\\bld"
         else
           export CONDA_BLD_DIR="build_artifacts"
         fi
@@ -182,18 +158,20 @@ jobs:
         # Archive the CONDA_BLD_DIR environments only when the job fails
         # Use different prefix for successful and failed build artifacts
         # so random failures don't prevent rebuilds from creating artifacts.
-        JOB_STATUS="${{ job.status }}"
         if [ $JOB_STATUS == "failure" ]; then
           export BLD_ARTIFACT_PREFIX="conda_artifacts"
           export ENV_ARTIFACT_PREFIX="conda_envs"
         else
           export BLD_ARTIFACT_PREFIX="conda_pkgs"
         fi
-        ./.scripts/create_conda_build_artifacts.sh
-      continue-on-error: true
+        if [ $OS == "windows" ]; then
+          pwsh -Command ". '.scripts/create_conda_build_artifacts.bat'"
+        else
+          ./.scripts/create_conda_build_artifacts.sh
+        fi
 
     - name: Store conda build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
       if: ${{ always() && steps.prepare-artifacts.outcome == 'success' }}
       with:
         name: ${{ steps.prepare-artifacts.outputs.BLD_ARTIFACT_NAME }}
@@ -202,8 +180,9 @@ jobs:
       continue-on-error: true
 
     - name: Store conda build environment artifacts
-      uses: actions/upload-artifact@v3
-      if: ${{ failure() && steps.prepare-artifacts.outcome == 'success' }}
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      # only relevant if build failed, see above
+      if: ${{ always() && steps.determine-status.outputs.status == 'failure' && steps.prepare-artifacts.outcome == 'success' }}
       with:
         name: ${{ steps.prepare-artifacts.outputs.ENV_ARTIFACT_NAME }}
         path: ${{ steps.prepare-artifacts.outputs.ENV_ARTIFACT_PATH }}
