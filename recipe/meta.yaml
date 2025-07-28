@@ -17,8 +17,11 @@ requirements:
     - py-opencv
     - robotraconteur_companion_python
     - python
+    - numpy
 
   run:
+    - __unix # [unix]
+    - __win # [win]
     - robotraconteur
     - robotraconteur_companion
     - gazebo
@@ -32,9 +35,11 @@ requirements:
     - drekar-launch
     - drekar-launch-process
     - menuinst # [win]
+    - numpy
 
 build:
-  number: 1
+  number: 3
+  noarch: python
 
 about:
   home: http://robotraconteur.com

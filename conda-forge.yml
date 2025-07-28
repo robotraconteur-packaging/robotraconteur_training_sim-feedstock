@@ -11,6 +11,6 @@ provider:
 github_actions:
   upload_packages: True
   store_build_artifacts: True
-
-os_version:
-  linux_64: cos7
+noarch_platforms:
+  - linux_64
+  - win_64
