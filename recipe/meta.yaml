@@ -3,8 +3,8 @@ package:
   version: 0.5.0a1
 
 source:
-  url: https://github.com/johnwason/robotraconteur_training_sim/archive/88be294c05408aeb0c96945d863ea4b78349cbe5.tar.gz
-  sha256: 66995cf97bff59c68a22a8106c6a5707a9e462774c35aeed4532f608b37db157
+  url: https://github.com/johnwason/robotraconteur_training_sim/archive/2b45f4695ac356e3c157094c911934936b407673.tar.gz
+  sha256: 6bfea1a85679b98b0ee47aade612ad41f847299218b947d4f1a97cb98dce62ed
 
 requirements:
   host:
