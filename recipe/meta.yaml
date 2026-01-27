@@ -1,17 +1,17 @@
 package:
   name: robotraconteur_training_sim
-  version: 0.4.0
+  version: 0.5.0a1
 
 source:
-  git_url: https://github.com/robotraconteur-contrib/robotraconteur_training_sim.git
-  git_rev: v0.4.0
+  url: https://github.com/johnwason/robotraconteur_training_sim/archive/88be294c05408aeb0c96945d863ea4b78349cbe5.tar.gz
+  sha256: 66995cf97bff59c68a22a8106c6a5707a9e462774c35aeed4532f608b37db157
 
 requirements:
   host:
     - robotraconteur
     - robotraconteur_companion
-    - gazebo
-    - gazebo_robotraconteur_server_plugin
+    - gz-sim
+    - gz-sim-robotraconteur-plugins
     - gazebo-robotraconteur-sim-drivers
     - pyyaml
     - py-opencv
@@ -24,8 +24,8 @@ requirements:
     - __win # [win]
     - robotraconteur
     - robotraconteur_companion
-    - gazebo
-    - gazebo_robotraconteur_server_plugin
+    - gz-sim
+    - gz-sim-robotraconteur-plugins
     - gazebo-robotraconteur-sim-drivers
     - pyyaml
     - py-opencv
@@ -38,7 +38,7 @@ requirements:
     - numpy
 
 build:
-  number: 3
+  number: 0
   noarch: python
 
 about:
