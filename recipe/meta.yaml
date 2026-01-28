@@ -3,8 +3,8 @@ package:
   version: 0.5.0a1
 
 source:
-  url: https://github.com/johnwason/robotraconteur_training_sim/archive/9a47a96aaa968fc64ed238d3f65ab01e7f7fb6ee.tar.gz
-  sha256: e29a1a20ace473b215af72732f69fc58a41e7fd30f0dba392c6c525ec7b150ff
+  url: https://github.com/johnwason/robotraconteur_training_sim/archive/42f68112df7633484584e0de614f929cdd941487.tar.gz
+  sha256: 642fea804bb19bf901408fc485d46f7302c4c84ba04e8476506976a1455f110b
 
 requirements:
   host:
@@ -38,7 +38,7 @@ requirements:
     - numpy
 
 build:
-  number: 1
+  number: 2
   noarch: python
 
 about:
