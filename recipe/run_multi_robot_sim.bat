@@ -1,3 +1,3 @@
 @echo off
 
-call %CONDA_PREFIX%\gz_example\multi_robot\run_sim.bat
+call %CONDA_PREFIX%\opt\robotraconteur_training_sim\multi_robot\run_sim.bat

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-$CONDA_PREFIX/gz_example/create/run_sim
+$CONDA_PREFIX/opt/robotraconteur_training_sim/create/run_sim
